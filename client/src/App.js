@@ -24,6 +24,7 @@ import Playlists from "./components/Playlists";// Correct for named export
 import SongDetails from "./components/SongDetails";
 import ApiPage from "./components/ApiPage";
 import ApiSongDetails from './components/ApiSongDetails';
+import BrowseSongs from "./components/BrowseSongs";
 function App() {
   const firebaseAuth = getAuth(app);
   const navigate = useNavigate();
@@ -90,6 +91,7 @@ function App() {
           <Route path="/userProfile" element={<UserProfile />} />
           <Route path="/playlists" element={<Playlists />} />
           <Route path='/apipage' element={<ApiPage />} />
+          <Route path='/browsesongs' element={<BrowseSongs />} />
           <Route path="/api-song-details/:id"element={<ApiSongDetails />} />
           <Route path="/song/:id" element={<SongDetails />} />
         </Routes>

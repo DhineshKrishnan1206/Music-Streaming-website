@@ -38,7 +38,7 @@ const Header = () => {
         {/* prettier-ignore */}
         <li className="mx-5 text-lg"><NavLink to={'/home'} className={({isActive}) => isActive ? isActiveStyles : isNotActiveStyles}>User Songs</NavLink></li>
         {/* prettier-ignore */}
-        <li className="mx-5 text-lg"><NavLink to={'/jio'} className={({isActive}) => isActive ? isActiveStyles : isNotActiveStyles}>Jio</NavLink></li>
+        <li className="mx-5 text-lg"><NavLink to={'/browsesongs'} className={({isActive}) => isActive ? isActiveStyles : isNotActiveStyles}>Browse Songs</NavLink></li>
         {/* prettier-ignore */}
         <li className="mx-5 text-lg"><NavLink to={'/contact'} className={({isActive}) => isActive ? isActiveStyles : isNotActiveStyles}>Contact</NavLink></li>
       </ul>

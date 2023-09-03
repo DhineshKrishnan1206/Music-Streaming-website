@@ -68,7 +68,7 @@ const ApiMusicPlayer = ({ songUrl, songNameFromAPI, songImageFromAPI ,albumNameF
           <motion.i whileTap={{ scale: 0.8 }}>{/* Add pause icon here */}</motion.i>
           <motion.i whileTap={{ scale: 0.8 }}>{/* Add next icon here */}</motion.i>
           <button
-            className="text-blue-500 hover:underline cursor-pointer"
+            className="text-black-500 hover:underline cursor-pointer"
             onClick={toggleMinimize}
           >
             Expand
