@@ -32,7 +32,8 @@ const SongCard = ({ data, index, onCardClick }) => {
           const songImageFromAPI = selectedSong.image.find(
             (img) => img.quality === '500x500'
           ).link; // Get the song image URL from the API
-          const albumNameFromAPI = selectedSong.album.name; // Get the album name from the API
+          const albumNameFromAPI = selectedSong.album.name; 
+          const artistName = selectedSong.primaryArtists;
   
           // Truncate the song name if it's too long
           const truncatedSongName =
@@ -41,6 +42,7 @@ const SongCard = ({ data, index, onCardClick }) => {
           console.log(`Song name: ${songNameFromAPI}`);
           console.log(`Song image URL: ${songImageFromAPI}`);
           console.log(`Album name: ${albumNameFromAPI}`);
+          console.log(`Artist Name : ${artistName}`);
   
           // Send the song link, truncated song name, song image URL, and album name to the parent component's callback function
           onCardClick(downloadUrl.link, truncatedSongName, songImageFromAPI, albumNameFromAPI);

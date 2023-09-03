@@ -7,14 +7,14 @@ import { FaMinus } from 'react-icons/fa'; // Import the FaMinus icon
 
 import MinimizeIcon from '../assets/img/minimize.png';
 
-const ApiMusicPlayer = ({ songUrl, songNameFromAPI, songImageFromAPI ,albumNameFromAPI}) => {
+const ApiMusicPlayer = ({ songUrl, songNameFromAPI, songImageFromAPI ,albumNameFromAPI,artistName}) => {
   const [{ miniPlayer }] = useStateValue();
   const [showDetails, setShowDetails] = useState(true); // State to control displaying song details
   const [minimized, setMinimized] = useState(false); // State to control minimized view
 
   useEffect(() => {
     
-  }, [songUrl, songNameFromAPI]);
+  }, [songUrl, songNameFromAPI,albumNameFromAPI,artistName]);
 
   const toggleMinimize = () => {
     setMinimized(!minimized);
@@ -43,13 +43,14 @@ const ApiMusicPlayer = ({ songUrl, songNameFromAPI, songImageFromAPI ,albumNameF
         {/* Song details and play controls */}
         <div className={`flex items-center w-full gap-3 ${minimized ? 'hidden' : ''}`}>
           <div>
-            <p className="text-xl text-headingColor font-semibold">
-              {songNameFromAPI} {/* Use the songNameFromAPI variable as the song name */}
-              <span className="text-base ml-2 text-gray-500">{albumNameFromAPI}</span>
-            </p>
+          <p className="text-xl text-headingColor font-semibold">
+  {songNameFromAPI}
+  
+</p>
+<span className="text-base ml-2 text-gray-500">{albumNameFromAPI}</span>
             <p className="text-textColor text-sm font-semibold">
-              Artist Name (Category)
-            </p>
+  {artistName}
+</p>
           </div>
           <div className="flex-1">
             {/* Use the audioSrc state as the audio source */}

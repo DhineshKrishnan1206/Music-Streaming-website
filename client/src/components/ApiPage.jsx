@@ -9,7 +9,8 @@ const ApiPage = () => {
   const [selectedSongUrl, setSelectedSongUrl] = useState(null); // State to store selected song URL
   const [songNameFromAPI, setSongNameFromAPI] = useState(''); // Initialize with an empty string
   const [songImageFromAPI, setSongImageFromAPI] = useState(''); // Initialize with an empty string
-
+  const [albumNameFromAPI,setalbumNameFromAPI] = useState('');
+  const [artistName,setartistName] = useState('');
   useEffect(() => {
     const trendingUrl = 'https://saavn.me/modules?language=tamil';
 
@@ -27,10 +28,12 @@ const ApiPage = () => {
   }, []);
 
   // Function to handle song card click and update selectedSongUrl
-  const handleSongCardClick = (downloadUrl ,name ,image) => {
+  const handleSongCardClick = (downloadUrl ,name ,image,albumname,artistname) => {
     setSelectedSongUrl(downloadUrl);
     setSongNameFromAPI(name); // Set the song name from the API
     setSongImageFromAPI(image); 
+    setalbumNameFromAPI(albumname);
+    setartistName(artistName);
   };
 
   return (
@@ -72,6 +75,8 @@ const ApiPage = () => {
           songUrl={selectedSongUrl}
           songNameFromAPI={songNameFromAPI}
           songImageFromAPI={songImageFromAPI}
+          albumNameFromAPI={albumNameFromAPI}
+          artistName={artistName}
           
           onClose={() => setSelectedSongUrl(null)} // Add a function to close the player
         />
