@@ -4,17 +4,17 @@ import { Link } from 'react-router-dom';
 
 const SongCard = ({ data, index, onCardClick }) => {
   // Extract relevant details from the API data
-  const { name, imageURL, artist, _id } = data;
+  const { name, imageURL, artist, _id,albumName } = data;
 
   const handleSongCardClick = async () => {
     try {
       // Encode the song name to be included in the query URL
       const encodedSongName = encodeURIComponent(name);
-
+  
       // Fetch song details using the encoded song name
       const response = await fetch(`https://saavn.me/search/songs?query=${encodedSongName}`);
       const responseData = await response.json();
-
+  
       // Check if the API response contains the "quality": "320kbps" parameter
       if (
         responseData &&
@@ -26,13 +26,24 @@ const SongCard = ({ data, index, onCardClick }) => {
         const downloadUrl = selectedSong.downloadUrl.find(
           (url) => url.quality === '320kbps'
         );
-
+  
         if (downloadUrl) {
-          console.log(`Song name: ${name}`);
-          console.log(`320kbps Download URL: ${downloadUrl.link}`);
-          
-          // Send the song link to the parent component's callback function
-          onCardClick(downloadUrl.link);
+          const songNameFromAPI = selectedSong.name; // Get the song name from the API
+          const songImageFromAPI = selectedSong.image.find(
+            (img) => img.quality === '500x500'
+          ).link; // Get the song image URL from the API
+          const albumNameFromAPI = selectedSong.album.name; // Get the album name from the API
+  
+          // Truncate the song name if it's too long
+          const truncatedSongName =
+            songNameFromAPI.length > 25 ? `${songNameFromAPI.slice(0, 25)}...` : songNameFromAPI;
+  
+          console.log(`Song name: ${songNameFromAPI}`);
+          console.log(`Song image URL: ${songImageFromAPI}`);
+          console.log(`Album name: ${albumNameFromAPI}`);
+  
+          // Send the song link, truncated song name, song image URL, and album name to the parent component's callback function
+          onCardClick(downloadUrl.link, truncatedSongName, songImageFromAPI, albumNameFromAPI);
         } else {
           console.log('320kbps quality not found.');
         }
@@ -43,7 +54,8 @@ const SongCard = ({ data, index, onCardClick }) => {
       console.error('Error fetching song details:', error);
     }
   };
-
+  
+  
   return (
     <motion.div
       key={_id}

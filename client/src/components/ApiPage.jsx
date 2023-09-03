@@ -7,9 +7,11 @@ import ApiMusicPlayer from './ApiMusicPlayer'; // Import the ApiMusicPlayer comp
 const ApiPage = () => {
   const [trendingData, setTrendingData] = useState([]);
   const [selectedSongUrl, setSelectedSongUrl] = useState(null); // State to store selected song URL
+  const [songNameFromAPI, setSongNameFromAPI] = useState(''); // Initialize with an empty string
+  const [songImageFromAPI, setSongImageFromAPI] = useState(''); // Initialize with an empty string
 
   useEffect(() => {
-    const trendingUrl = 'https://saavn.me/modules?language=tamil,telugu';
+    const trendingUrl = 'https://saavn.me/modules?language=tamil';
 
     // Fetch trending data
     fetch(trendingUrl)
@@ -25,8 +27,10 @@ const ApiPage = () => {
   }, []);
 
   // Function to handle song card click and update selectedSongUrl
-  const handleSongCardClick = (downloadUrl) => {
+  const handleSongCardClick = (downloadUrl ,name ,image) => {
     setSelectedSongUrl(downloadUrl);
+    setSongNameFromAPI(name); // Set the song name from the API
+    setSongImageFromAPI(image); 
   };
 
   return (
@@ -62,10 +66,15 @@ const ApiPage = () => {
         ))}
       </div>
 
-      {/* Render the ApiMusicPlayer with the selected song URL */}
+      {/* Render the ApiMusicPlayer only when a song is selected */}
       {selectedSongUrl && (
         <ApiMusicPlayer 
-        songUrl={selectedSongUrl} />
+          songUrl={selectedSongUrl}
+          songNameFromAPI={songNameFromAPI}
+          songImageFromAPI={songImageFromAPI}
+          
+          onClose={() => setSelectedSongUrl(null)} // Add a function to close the player
+        />
       )}
     </div>
   );
