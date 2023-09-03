@@ -22,8 +22,8 @@ import { actionType } from "./Context/reducer";
 import { motion, AnimatePresence } from "framer-motion";
 import Playlists from "./components/Playlists";// Correct for named export
 import SongDetails from "./components/SongDetails";
-
-
+import ApiPage from "./components/ApiPage";
+import ApiSongDetails from './components/ApiSongDetails';
 function App() {
   const firebaseAuth = getAuth(app);
   const navigate = useNavigate();
@@ -89,6 +89,8 @@ function App() {
           <Route path="/dashboard/*" element={<Dashboard />} />
           <Route path="/userProfile" element={<UserProfile />} />
           <Route path="/playlists" element={<Playlists />} />
+          <Route path='/apipage' element={<ApiPage />} />
+          <Route path="/api-song-details/:id"element={<ApiSongDetails />} />
           <Route path="/song/:id" element={<SongDetails />} />
         </Routes>
 

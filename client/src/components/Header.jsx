@@ -34,9 +34,9 @@ const Header = () => {
 
       <ul className="flex items-center justify-center ml-7">
         {/* prettier-ignore */}
-        <li className="mx-5 text-lg"><NavLink to={'/home'} className={({isActive}) => isActive ? isActiveStyles : isNotActiveStyles}>Home</NavLink></li>
+        <li className="mx-5 text-lg"><NavLink to={'/apipage'} className={({isActive}) => isActive ? isActiveStyles : isNotActiveStyles}>Home</NavLink></li>
         {/* prettier-ignore */}
-        <li className="mx-5 text-lg"><NavLink to={'/playlists'} className={({isActive}) => isActive ? isActiveStyles : isNotActiveStyles}>Playlists</NavLink></li>
+        <li className="mx-5 text-lg"><NavLink to={'/home'} className={({isActive}) => isActive ? isActiveStyles : isNotActiveStyles}>User Songs</NavLink></li>
         {/* prettier-ignore */}
         <li className="mx-5 text-lg"><NavLink to={'/jio'} className={({isActive}) => isActive ? isActiveStyles : isNotActiveStyles}>Jio</NavLink></li>
         {/* prettier-ignore */}

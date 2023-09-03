@@ -25,8 +25,7 @@ const Home = () => {
   ] = useStateValue();
 
   const [filteredSongs, setFilteredSongs] = useState(null);
-  const [lastFmSongs, setLastFmSongs] = useState([]); // State for Last.fm API songs
-
+ 
   useEffect(() => {
     if (!allSongs) {
       getAllSongs().then((data) => {
@@ -38,20 +37,6 @@ const Home = () => {
     }
   }, []);
 
-  // Fetch songs from Last.fm API
-  const getLastFmSongs = async () => {
-    try {
-      const response = await fetch('LASTFM_API_URL_HERE');
-      const data = await response.json();
-      setLastFmSongs(data.results.songs); // Assuming the API response structure
-    } catch (error) {
-      console.error("Error fetching Last.fm songs:", error);
-    }
-  };
-
-  useEffect(() => {
-    getLastFmSongs();
-  }, []);
 
   useEffect(() => {
     if (searchTerm.length > 0) {
