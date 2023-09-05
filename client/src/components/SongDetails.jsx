@@ -10,7 +10,6 @@ const SongDetails = () => {
   const [{ allSongs }] = useStateValue();
   const [newComment, setNewComment] = useState("");
   const [currentUser, setCurrentUser] = useState(null);
-  console.log(currentUser);
 console.log("id:", id);
 const song = allSongs.find((data) => data._id === id);
   const [{ comments }, dispatch] = useStateValue();
