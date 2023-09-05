@@ -11,6 +11,8 @@ router.post("/save", async (req, res) => {
         email: req.body.email,
         song_Url: req.body.song_Url,
         comment_text: req.body.comment_text,
+        song_name:req.body.song_name,
+        song_url:req.body.song_url,
     });
 
     try {
@@ -99,6 +101,16 @@ router.put("/update/:email", async (req, res) => {
     }
 });
 
-
+router.get("/getBySongName/:name", async (req, res) => {
+    const { name } = req.params;
+  
+    try {
+      const comments = await comment.find({ song_name: name });
+      return res.status(200).send({ success: true, comments: comments });
+    } catch (error) {
+      return res.status(400).send({ success: false, msg: error });
+    }
+  });
+  
 
 module.exports = router;

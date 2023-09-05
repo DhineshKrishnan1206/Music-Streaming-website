@@ -9,7 +9,8 @@ const SongDetails = () => {
   const { id } = useParams();
   const [{ allSongs }] = useStateValue();
   const [newComment, setNewComment] = useState("");
- 
+  const [currentUser, setCurrentUser] = useState(null);
+  console.log(currentUser);
 console.log("id:", id);
 const song = allSongs.find((data) => data._id === id);
   const [{ comments }, dispatch] = useStateValue();
@@ -50,6 +51,7 @@ const song = allSongs.find((data) => data._id === id);
       console.error("Error posting comment:", error);
     });
   };
+  
 
   const handleDownload = (songUrl) => {
     const link = document.createElement("a");

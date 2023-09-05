@@ -92,8 +92,9 @@ function App() {
           <Route path="/playlists" element={<Playlists />} />
           <Route path='/apipage' element={<ApiPage />} />
           <Route path='/browsesongs' element={<BrowseSongs />} />
-          <Route path="/api-song-details/:id"element={<ApiSongDetails />} />
+          <Route path="/api-song-details/:id" element={<ApiSongDetails user={user} />}/>
           <Route path="/song/:id" element={<SongDetails />} />
+          
         </Routes>
 
         {isSongPlaying && (
