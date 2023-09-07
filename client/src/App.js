@@ -25,6 +25,7 @@ import SongDetails from "./components/SongDetails";
 import ApiPage from "./components/ApiPage";
 import ApiSongDetails from './components/ApiSongDetails';
 import BrowseSongs from "./components/BrowseSongs";
+
 function App() {
   const firebaseAuth = getAuth(app);
   const navigate = useNavigate();

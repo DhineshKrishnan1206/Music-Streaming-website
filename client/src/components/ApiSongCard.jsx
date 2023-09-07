@@ -21,7 +21,9 @@ const ApiSongCard = ({ data, index,user }) => {
   };
   const userName = user.user.user.name;
   const userEmail = user.user.user.email;
-
+  console.log("User Name:", userName);
+  console.log("User Name:", userEmail);
+  
  const handleCommentSubmit = () => {
   if (newComment.trim() !== '') {
     // Add the new comment to the comments list
@@ -34,7 +36,7 @@ const ApiSongCard = ({ data, index,user }) => {
     axios
       .post('http://localhost:4000/api/comments/save', {
         name: userName, // Use user.name to send the user's name
-        email: userEmail, // Use user.email to send the user's email
+        email: user.email, // Use user.email to send the user's email
         song_name: name,
         comment_text: newComment,
       })
