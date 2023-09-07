@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Logo } from "../assets/img";
 import { useStateValue } from "../Context/StateProvider";
@@ -6,14 +6,14 @@ import { isActiveStyles, isNotActiveStyles } from "../utils/styles";
 import { getAuth } from "firebase/auth";
 import { app } from "../config/firebase.config";
 import { motion } from "framer-motion";
-
 import { FaCrown } from "react-icons/fa";
 
 const Header = () => {
   const navigate = useNavigate();
   const [{ user }, dispatch] = useStateValue();
-
   const [isMenu, setIsMenu] = useState(false);
+  const [isSticky, setIsSticky] = useState(false);
+  const [scrollOpacity, setScrollOpacity] = useState(1); // Default opacity is 1 (fully opaque)
 
   const logout = () => {
     const firebaseAuth = getAuth(app);
@@ -26,22 +26,56 @@ const Header = () => {
     navigate("/login", { replace: true });
   };
 
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 0) {
+        setIsSticky(true);
+        // Calculate opacity based on scroll position (adjust as needed)
+        const opacity = 1 - window.scrollY / 200; // You can change the 200 value to control when the opacity starts changing
+        setScrollOpacity(opacity < 0 ? 0 : opacity); // Ensure opacity is not negative
+      } else {
+        setIsSticky(false);
+        setScrollOpacity(1); // Reset to fully opaque when at the top
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
-    <header className="flex items-center w-full p-4 md:py-2 md:px-6">
+    <header
+    className={`bg-black bg-opacity-${Math.floor(scrollOpacity * 100)} text-white flex items-center w-full p-4 md:py-2 md:px-6 ${
+      isSticky ? "sticky top-0 z-10 shadow-lg" : ""
+    }`}
+    
+    >
       <NavLink to={"/"}>
         <img src={Logo} className="w-16" alt="" />
       </NavLink>
 
       <ul className="flex items-center justify-center ml-7">
-        {/* prettier-ignore */}
-        <li className="mx-5 text-lg"><NavLink to={'/apipage'} className={({isActive}) => isActive ? isActiveStyles : isNotActiveStyles}>Home</NavLink></li>
-        {/* prettier-ignore */}
-        <li className="mx-5 text-lg"><NavLink to={'/home'} className={({isActive}) => isActive ? isActiveStyles : isNotActiveStyles}>User Songs</NavLink></li>
-        {/* prettier-ignore */}
-        <li className="mx-5 text-lg"><NavLink to={'/browsesongs'} className={({isActive}) => isActive ? isActiveStyles : isNotActiveStyles}>Browse Songs</NavLink></li>
-        {/* prettier-ignore */}
-        <li className="mx-5 text-lg"><NavLink to={'/contact'} className={({isActive}) => isActive ? isActiveStyles : isNotActiveStyles}>Contact</NavLink></li>
-      </ul>
+  {/* prettier-ignore */}
+  <li className="mx-5 text-lg">
+    <NavLink to={'/apipage'} className="text-white">Home</NavLink>
+  </li>
+  {/* prettier-ignore */}
+  <li className="mx-5 text-lg">
+    <NavLink to={'/home'} className="text-white">User Songs</NavLink>
+  </li>
+  {/* prettier-ignore */}
+  <li className="mx-5 text-lg">
+    <NavLink to={'/browsesongs'} className="text-white">Browse Songs</NavLink>
+  </li>
+  {/* prettier-ignore */}
+  <li className="mx-5 text-lg">
+    <NavLink to={'/contact'} className="text-white">Contact</NavLink>
+  </li>
+</ul>
+
 
       <div
         className="flex items-center ml-auto cursor-pointer gap-2 relative"

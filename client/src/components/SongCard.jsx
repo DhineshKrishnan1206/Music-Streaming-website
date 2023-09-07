@@ -70,31 +70,35 @@ const SongCard = ({ data, index, onCardClick }) => {
     onClick={handleSongCardClick}
     onMouseEnter={() => setIsHovered(true)}
     onMouseLeave={() => setIsHovered(false)}
+    style={{
+      transform: isHovered ? 'rotateX(10deg) rotateY(10deg)' : 'none', // Apply the transform on hover
+      transition: 'transform 0.3s ease', // Transition on hover
+    }}
   >
-    <div className="w-40 min-w-[160px] h-40 min-h-[160px] rounded-lg drop-shadow-lg relative overflow-hidden">
-      <motion.img
-        whileHover={{ scale: 1.05 }}
-        src={imageURL}
-        alt=""
-        className="w-full h-full rounded-lg object-cover"
-      />
-      {isHovered && (
-        <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40 hover:bg-opacity-60 transition-opacity duration-300">
-          <IoPlayCircle className="text-white text-4xl cursor-pointer" />
-        </div>
-      )}
-    </div>
+      <div className="w-40 min-w-[160px] h-40 min-h-[160px] rounded-lg drop-shadow-lg relative overflow-hidden">
+        <motion.img
+          whileHover={{ scale: 1.05 }}
+          src={imageURL}
+          alt=""
+          className="w-full h-full rounded-lg object-cover"
+        />
+        {isHovered && (
+          <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40 hover:bg-opacity-60 transition-opacity duration-300">
+            <IoPlayCircle className="text-white text-4xl cursor-pointer" />
+          </div>
+        )}
+      </div>
 
-    <p className="text-base text-headingColor font-semibold my-2">
-      {name.length > 25 ? `${name.slice(0, 25)}` : name}
-      <span className="block text-sm text-gray-400 my-1">{artist}</span>
-    </p>
-    <Link to={`/api-song-details/${_id}`} state={{ song: data }}>
-      <button className="text-blue-500 hover:underline cursor-pointer">
-        Song Details
-      </button>
-    </Link>
-  </motion.div>
-);
+      <p className="text-base text-headingColor font-semibold my-2">
+        {name.length > 25 ? `${name.slice(0, 25)}` : name}
+        <span className="block text-sm text-gray-400 my-1">{artist}</span>
+      </p>
+      <Link to={`/api-song-details/${_id}`} state={{ song: data }}>
+        <button className="text-blue-500 hover:underline cursor-pointer">
+          Song Details
+        </button>
+      </Link>
+    </motion.div>
+  );
 };
 export default SongCard;
