@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import {
+  Routes,
+  Route,
+  useNavigate,
+} from "react-router-dom";
 import "./App.css";
+import { MusicPlayerProvider } from "./components/MusicPlayerContext";
 import {
   getAuth,
   GoogleAuthProvider,
@@ -11,6 +16,7 @@ import { app } from "./config/firebase.config";
 import { getAllSongs, validateUser } from "./api";
 import {
   Dashboard,
+  DashboardNewSong,
   Home,
   Loader,
   Login,
@@ -20,11 +26,15 @@ import {
 import { useStateValue } from "./Context/StateProvider";
 import { actionType } from "./Context/reducer";
 import { motion, AnimatePresence } from "framer-motion";
-import Playlists from "./components/Playlists";// Correct for named export
+import Playlists from "./components/Playlists";
 import SongDetails from "./components/SongDetails";
 import ApiPage from "./components/ApiPage";
-import ApiSongDetails from './components/ApiSongDetails';
-import BrowseSongs from "./components/BrowseSongs";
+import ApiSongDetails from "./components/ApiSongDetails";
+import LandingPage from "./components/LandingPage";
+import DashBoardHome from "./components/DashBoardHome";
+import Browse from "./components/Browse";
+import SongPage from "./components/SongPage";
+import ApiMusicPlayer from "./components/ApiMusicPlayer";
 
 function App() {
   const firebaseAuth = getAuth(app);
@@ -42,7 +52,6 @@ function App() {
     firebaseAuth.onAuthStateChanged((userCred) => {
       if (userCred) {
         userCred.getIdToken().then((token) => {
-          // console.log(token);
           window.localStorage.setItem("auth", "true");
           validateUser(token).then((data) => {
             dispatch({
@@ -77,25 +86,29 @@ function App() {
   }, []);
 
   return (
+    <MusicPlayerProvider>
     <AnimatePresence>
       <div className="h-auto flex items-center justify-center min-w-[680px]">
-        {isLoading ||
-          (!user && (
-            <div className="fixed inset-0 bg-loaderOverlay backdrop-blur-sm ">
-              <Loader />
-            </div>
-          ))}
+        {isLoading || (!user && (
+          <div className="fixed inset-0 bg-loaderOverlay backdrop-blur-sm ">
+            <Loader />
+          </div>
+        ))}
+        
         <Routes>
           <Route path="/login" element={<Login setAuth={setAuth} />} />
-          <Route path="/*" element={<Home />} />
+          <Route path="home" element={<Home />} />
           <Route path="/dashboard/*" element={<Dashboard />} />
+          <Route path="/dashboardhome/*" element={<DashBoardHome />} />
           <Route path="/userProfile" element={<UserProfile />} />
           <Route path="/playlists" element={<Playlists />} />
-          <Route path='/apipage' element={<ApiPage />} />
-          <Route path='/browsesongs' element={<BrowseSongs />} />
-          <Route path="/api-song-details/:id" element={<ApiSongDetails user={user} />}/>
+          <Route path="/apipage" element={<ApiPage />} />
+          <Route path="/songs/:id" element={<SongPage />} />
+          <Route path="/browsesongs" element={<Browse />} />
+          <Route path="/*" element={<LandingPage />} />
+          <Route path="songupload" element={<DashboardNewSong />} />
+          <Route path="/api-song-details/:id" element={<ApiSongDetails user={user} />} />
           <Route path="/song/:id" element={<SongDetails />} />
-          
         </Routes>
 
         {isSongPlaying && (
@@ -110,6 +123,7 @@ function App() {
         )}
       </div>
     </AnimatePresence>
+    </MusicPlayerProvider>
   );
 }
 

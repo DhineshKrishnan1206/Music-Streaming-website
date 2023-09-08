@@ -4,7 +4,7 @@ import { IoSearch } from 'react-icons/io5';
 import SongCard from './SongCard';
 import ApiMusicPlayer from './ApiMusicPlayer';
 import { FaTimes } from 'react-icons/fa';
-
+import { useMusicPlayer } from './MusicPlayerContext';
 const ApiPage = () => {
   const [trendingTamilData, setTrendingTamilData] = useState([]);
   const [trendingEnglishData, setTrendingEnglishData] = useState([]);
@@ -18,7 +18,7 @@ const ApiPage = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [isSearchModalOpen, setSearchModalOpen] = useState(false);
-
+  const { songUrl, setSongUrl, songName, setSongName, songImage, setSongImage, miniPlayer, setMiniPlayer, isPlaying, setIsPlaying } = useMusicPlayer();
   useEffect(() => {
     const trendingTamilUrl = 'https://saavn.me/modules?language=tamil';
     const trendingEnglishUrl = 'https://saavn.me/modules?language=english';
@@ -37,6 +37,23 @@ const ApiPage = () => {
         console.error('Error fetching trending data for Tamil:', error);
       });
 
+      const restoreMusicPlayerState = () => {
+        const savedSongUrl = localStorage.setItem('songUrl', selectedSongUrl);
+        const savedSongName = localStorage.setItem('songName', songNameFromAPI);
+        const savedSongImage = localStorage.setItem('songImage', songImageFromAPI);
+        const savedIsPlaying = localStorage.setItem('isPlaying', true);
+        
+    
+        if (savedSongUrl && savedSongName && savedSongImage && savedIsPlaying) {
+          // Set the restored state in your context
+          setSongUrl(savedSongUrl);
+          setSongName(savedSongName);
+          setSongImage(savedSongImage);
+          setIsPlaying(savedIsPlaying === 'true'); // Convert string to boolean
+        }
+      };
+      restoreMusicPlayerState();
+  
     // Fetch trending data for English
     fetch(trendingEnglishUrl)
       .then((response) => response.json())
@@ -78,6 +95,7 @@ const ApiPage = () => {
     setSongImageFromAPI(image);
     setalbumNameFromAPI(albumname);
     setartistName(artistname);
+    setIsPlaying(true);
   };
 
   const handleSearchInputChange = (event) => {
@@ -175,7 +193,7 @@ const ApiPage = () => {
             value={searchQuery}
             onChange={handleSearchInputChange}
           />
-          <button className="text-textColor" onClick={performSearch}>
+          <button className="neumorphism-button text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2" onClick={performSearch}>
             Search
           </button>
         </div>

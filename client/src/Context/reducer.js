@@ -25,7 +25,11 @@ const reducer = (state, action) => {
         ...state,
         user: action.user,
       };
-
+      case 'TOGGLE_MUSIC_PLAYER':
+        return {
+          ...state,
+          showMusicPlayer: !state.showMusicPlayer,
+        }
     case actionType.SET_SEARCH_TERM:
       return {
         ...state,

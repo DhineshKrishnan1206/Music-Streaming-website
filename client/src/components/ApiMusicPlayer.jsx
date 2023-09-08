@@ -3,18 +3,16 @@ import { useStateValue } from '../Context/StateProvider';
 import { motion } from 'framer-motion';
 import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
-import { FaMinus } from 'react-icons/fa'; // Import the FaMinus icon
+import { FaMinus } from 'react-icons/fa';
 
-import MinimizeIcon from '../assets/img/minimize.png';
-
-const ApiMusicPlayer = ({ songUrl, songNameFromAPI, songImageFromAPI ,albumNameFromAPI,artistName}) => {
+const ApiMusicPlayer = ({ songUrl, songNameFromAPI, songImageFromAPI, albumNameFromAPI, artistName }) => {
   const [{ miniPlayer }] = useStateValue();
-  const [showDetails, setShowDetails] = useState(true); // State to control displaying song details
-  const [minimized, setMinimized] = useState(false); // State to control minimized view
+  const [showDetails, setShowDetails] = useState(true);
+  const [minimized, setMinimized] = useState(false);
 
   useEffect(() => {
     
-  }, [songUrl, songNameFromAPI,albumNameFromAPI,artistName]);
+  }, [songUrl, songNameFromAPI, albumNameFromAPI, artistName]);
 
   const toggleMinimize = () => {
     setMinimized(!minimized);
@@ -26,36 +24,32 @@ const ApiMusicPlayer = ({ songUrl, songNameFromAPI, songImageFromAPI ,albumNameF
         miniPlayer ? 'top-40' : ''
       } ${minimized ? 'h-16 justify-center' : ''}`}
       style={{
-        backdropFilter: 'blur(10px)', // Apply a blur to create the glass effect
-        backgroundColor: 'rgba(255, 255, 255, 0.2)', // Adjust opacity as needed
-        borderRadius: '20px', // Add rounded corners
+        backdropFilter: 'blur(10px)',
+        backgroundColor: 'rgba(255, 255, 255, 0.2)',
+        borderRadius: '20px',
       }}
     >
       <div className={`flex items-center gap-3 ${minimized ? 'justify-center' : ''}`}>
-        {/* Song image */}
         <img
-          src={songImageFromAPI} // Use the songImageFromAPI variable as the image source
+          src={songImageFromAPI}
           className={`w-20 h-20 object-cover rounded-md ${
             minimized ? 'hidden' : ''
           }`}
           alt=""
         />
-        {/* Song details and play controls */}
         <div className={`flex items-center w-full gap-3 ${minimized ? 'hidden' : ''}`}>
           <div>
-          <p className="text-xl text-headingColor font-semibold">
-  {songNameFromAPI}
-  
-</p>
-<span className="text-base ml-2 text-gray-500">{albumNameFromAPI}</span>
+            <p className="text-xl text-headingColor font-semibold">
+              {songNameFromAPI}
+            </p>
+            <span className="text-base ml-2 text-gray-500">{albumNameFromAPI}</span>
             <p className="text-textColor text-sm font-semibold">
-  {artistName}
-</p>
+              {artistName}
+            </p>
           </div>
           <div className="flex-1">
-            {/* Use the audioSrc state as the audio source */}
             <AudioPlayer
-              src={songUrl} // Use the audio source from props
+              src={songUrl}
               autoPlay={true}
               showSkipControls={true}
             />

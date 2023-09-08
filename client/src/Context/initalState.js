@@ -14,4 +14,5 @@ export const initialState = {
   miniPlayer: false,
   playlists: [],
   comments: [],
+  showMusicPlayer: false,
 };
