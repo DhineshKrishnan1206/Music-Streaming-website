@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Header from "./Header";
 import ApiMusicPlayer from "./ApiMusicPlayer";
-
+import { Link } from "react-router-dom";
 const SongPage = () => {
   const playlist = JSON.parse(localStorage.getItem("playlist"));
   const { id } = useParams();
@@ -67,6 +67,11 @@ const SongPage = () => {
                   <p className="text-sm text-gray-500 truncate dark:text-black-400">
                     {song.primaryArtists}
                   </p>
+                  <Link to={`/songdetails/${song.id}`}>
+                    <p className="text-sm font-medium text-gray-900 truncate dark:text-black">
+                      Details
+                    </p>
+                  </Link>
                 </div>
               </div>
             </li>
